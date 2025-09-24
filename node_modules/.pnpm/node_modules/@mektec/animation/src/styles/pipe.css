@@ -1,0 +1,11 @@
+@keyframes pipe-dash-move {
+  to {
+    stroke-dashoffset: -44;
+  }
+}
+
+@keyframes ring-dash-move {
+  to {
+    stroke-dashoffset: -60;
+  }
+}
