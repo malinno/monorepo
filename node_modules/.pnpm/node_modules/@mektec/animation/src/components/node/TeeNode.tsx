@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { Handle, Position } from "@xyflow/react";
-import { useFlowSim } from "@/store/useFlowSim";
+import { useFlowSim } from "../../store/useFlowSim";
 
 type Orientation = "N" | "S" | "E" | "W";
 
@@ -15,7 +15,7 @@ const makeHandle = (bg: string, extra: CSSProperties): CSSProperties => ({
 
 const OFFSET = -7;
 const CENTER = "50%";
-const CENTERL = 129
+const CENTERL = 129;
 const ROTATION_MAP: Record<Orientation, number> = {
   N: 0,
   E: 90,
@@ -199,9 +199,24 @@ export default function TeeNode(props: any) {
         />
       </svg>
 
-      <Handle id="in" type="target" position={handles.inletPos} style={handles.inletStyle} />
-      <Handle id="out-main" type="source" position={handles.mainPos} style={handles.mainStyle} />
-      <Handle id="out-branch" type="source" position={handles.branchPos} style={handles.branchStyle} />
+      <Handle
+        id="in"
+        type="target"
+        position={handles.inletPos}
+        style={handles.inletStyle}
+      />
+      <Handle
+        id="out-main"
+        type="source"
+        position={handles.mainPos}
+        style={handles.mainStyle}
+      />
+      <Handle
+        id="out-branch"
+        type="source"
+        position={handles.branchPos}
+        style={handles.branchStyle}
+      />
     </div>
   );
 }

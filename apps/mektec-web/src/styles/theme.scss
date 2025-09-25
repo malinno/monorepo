@@ -1,0 +1,38 @@
+// ===========================================
+// MEKTEC WEB - THEME VARIABLES
+// ===========================================
+
+@import './config.scss';
+
+// Export SCSS variables as CSS custom properties
+:root {
+  --primary-form-bg: #{$primary-form-bg};
+  --accent-form-primary: #{$accent-form-primary};
+  --primary-color: #{$primary-color};
+  --secondary-color: #{$secondary-color};
+  --accent-primary: #{$accent-primary};
+  --accent-secondary: #{$accent-secondary};
+  --accent-warning: #{$accent-warning};
+  --accent-error: #{$accent-error};
+  --accent-info: #{$accent-info};
+  --text-primary: #{$text-primary};
+  --text-secondary: #{$text-secondary};
+  --text-tertiary: #{$text-tertiary};
+  --bg-primary: #{$bg-primary};
+  --bg-secondary: #{$bg-secondary};
+  --bg-card: #{$bg-card};
+  --border-primary: #{$border-primary};
+  --border-secondary: #{$border-secondary};
+  --white: #{$white};
+  --black: #{$black};
+  --gray-50: #{$gray-50};
+  --gray-100: #{$gray-100};
+  --gray-200: #{$gray-200};
+  --gray-300: #{$gray-300};
+  --gray-400: #{$gray-400};
+  --gray-500: #{$gray-500};
+  --gray-600: #{$gray-600};
+  --gray-700: #{$gray-700};
+  --gray-800: #{$gray-800};
+  --gray-900: #{$gray-900};
+}

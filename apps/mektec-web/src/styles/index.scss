@@ -1,0 +1,500 @@
+// ===========================================
+// MEKTEC WEB - MAIN STYLESHEET
+// ===========================================
+
+// Import SASS modules
+@use "sass:color";
+
+// Import Google Fonts
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+// Import configuration and styles
+@import "./config.scss";
+@import "./theme.scss";
+@import "./layout.scss";
+@import "./components.scss";
+
+// ===========================================
+// GLOBAL STYLES
+// ===========================================
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  line-height: $line-height-normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  color: $text-primary;
+  background-color: $bg-primary;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+// ===========================================
+// SCROLLBAR STYLES
+// ===========================================
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $bg-secondary;
+  border-radius: $border-radius-base;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $border-primary;
+  border-radius: $border-radius-base;
+
+  &:hover {
+    background: $text-tertiary;
+  }
+}
+
+::-webkit-scrollbar-corner {
+  background: $bg-secondary;
+}
+
+// Firefox scrollbar
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $border-primary $bg-secondary;
+}
+
+// ===========================================
+// SELECTION STYLES
+// ===========================================
+
+::selection {
+  background-color: rgba(33, 150, 243, 0.2);
+  color: $text-primary;
+}
+
+::-moz-selection {
+  background-color: rgba(33, 150, 243, 0.2);
+  color: $text-primary;
+}
+
+// ===========================================
+// FOCUS STYLES
+// ===========================================
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid $accent-primary;
+  outline-offset: 2px;
+}
+
+// ===========================================
+// LINK STYLES
+// ===========================================
+
+a {
+  color: $accent-primary;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: color.scale($accent-primary, $lightness: 10%);
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: 2px solid $accent-primary;
+    outline-offset: 2px;
+  }
+}
+
+// ===========================================
+// HEADING STYLES
+// ===========================================
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 $spacing-4 0;
+  font-family: $font-family-primary;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+  color: $text-primary;
+}
+
+h1 {
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+}
+
+h2 {
+  font-size: $font-size-3xl;
+}
+
+h3 {
+  font-size: $font-size-2xl;
+}
+
+h4 {
+  font-size: $font-size-xl;
+}
+
+h5 {
+  font-size: $font-size-lg;
+}
+
+h6 {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+}
+
+// ===========================================
+// PARAGRAPH STYLES
+// ===========================================
+
+p {
+  margin: 0 0 $spacing-4 0;
+  color: $text-primary;
+  line-height: $line-height-relaxed;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// ===========================================
+// LIST STYLES
+// ===========================================
+
+ul,
+ol {
+  margin: 0 0 $spacing-4 0;
+  padding-left: $spacing-6;
+  color: $text-primary;
+}
+
+li {
+  margin-bottom: $spacing-1;
+  line-height: $line-height-normal;
+}
+
+// ===========================================
+// TABLE STYLES
+// ===========================================
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: $spacing-4;
+  background-color: $bg-card;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: $spacing-3 $spacing-4;
+  text-align: left;
+  border-bottom: 1px solid $border-secondary;
+}
+
+th {
+  background-color: $bg-tertiary;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  font-size: $font-size-sm;
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing-wide;
+}
+
+td {
+  color: $text-primary;
+}
+
+tr:hover {
+  background-color: $bg-hover;
+}
+
+// ===========================================
+// CODE STYLES
+// ===========================================
+
+code {
+  font-family: $font-family-secondary;
+  font-size: 0.875em;
+  background-color: $bg-secondary;
+  padding: $spacing-1 $spacing-2;
+  border-radius: $border-radius-sm;
+  color: $accent-primary;
+}
+
+pre {
+  font-family: $font-family-secondary;
+  background-color: $bg-secondary;
+  padding: $spacing-4;
+  border-radius: $border-radius-base;
+  overflow-x: auto;
+  margin-bottom: $spacing-4;
+
+  code {
+    background-color: transparent;
+    padding: 0;
+    color: $text-primary;
+  }
+}
+
+// ===========================================
+// UTILITY CLASSES
+// ===========================================
+
+// Text utilities
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+.text-lowercase {
+  text-transform: lowercase !important;
+}
+.text-capitalize {
+  text-transform: capitalize !important;
+}
+
+.text-nowrap {
+  white-space: nowrap !important;
+}
+.text-break {
+  word-break: break-word !important;
+}
+
+// Display utilities
+.d-none {
+  display: none !important;
+}
+.d-block {
+  display: block !important;
+}
+.d-inline {
+  display: inline !important;
+}
+.d-inline-block {
+  display: inline-block !important;
+}
+.d-flex {
+  display: flex !important;
+}
+.d-inline-flex {
+  display: inline-flex !important;
+}
+.d-grid {
+  display: grid !important;
+}
+
+// Position utilities
+.position-static {
+  position: static !important;
+}
+.position-relative {
+  position: relative !important;
+}
+.position-absolute {
+  position: absolute !important;
+}
+.position-fixed {
+  position: fixed !important;
+}
+.position-sticky {
+  position: sticky !important;
+}
+
+// Overflow utilities
+.overflow-auto {
+  overflow: auto !important;
+}
+.overflow-hidden {
+  overflow: hidden !important;
+}
+.overflow-scroll {
+  overflow: scroll !important;
+}
+.overflow-visible {
+  overflow: visible !important;
+}
+
+// Cursor utilities
+.cursor-pointer {
+  cursor: pointer !important;
+}
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+.cursor-default {
+  cursor: default !important;
+}
+
+// User select utilities
+.user-select-none {
+  user-select: none !important;
+}
+.user-select-all {
+  user-select: all !important;
+}
+.user-select-auto {
+  user-select: auto !important;
+}
+
+// ===========================================
+// ANIMATION UTILITIES
+// ===========================================
+
+.animate-fade-in {
+  animation: fadeIn $duration-300 $ease-out;
+}
+
+.animate-fade-out {
+  animation: fadeOut $duration-300 $ease-in;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp $duration-300 $ease-out;
+}
+
+.animate-slide-in-down {
+  animation: slideInDown $duration-300 $ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft $duration-300 $ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight $duration-300 $ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// ===========================================
+// RESPONSIVE UTILITIES
+// ===========================================
+
+@include mobile {
+  .d-mobile-none {
+    display: none !important;
+  }
+  .d-mobile-block {
+    display: block !important;
+  }
+  .d-mobile-flex {
+    display: flex !important;
+  }
+  .d-mobile-grid {
+    display: grid !important;
+  }
+}
+
+@include tablet {
+  .d-tablet-none {
+    display: none !important;
+  }
+  .d-tablet-block {
+    display: block !important;
+  }
+  .d-tablet-flex {
+    display: flex !important;
+  }
+  .d-tablet-grid {
+    display: grid !important;
+  }
+}
+
+@include desktop {
+  .d-desktop-none {
+    display: none !important;
+  }
+  .d-desktop-block {
+    display: block !important;
+  }
+  .d-desktop-flex {
+    display: flex !important;
+  }
+  .d-desktop-grid {
+    display: grid !important;
+  }
+}

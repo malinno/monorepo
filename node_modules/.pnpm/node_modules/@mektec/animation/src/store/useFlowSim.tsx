@@ -74,10 +74,9 @@ function computeFlowSnapshot(nodes: Node[], edges: Edge[]): FlowComputation {
     }
 
     if (node.type === "tank") {
-      const level = Number(node.data?.level ?? 0);
-      const hasWater = level > EPS;
-      memo.set(nodeId, hasWater);
-      return hasWater;
+      // Tank always allows flow in (from pumps) and flow out (if has water)
+      memo.set(nodeId, true);
+      return true;
     }
 
     const factor = getNodeFlowFactor(node);
@@ -158,4 +157,3 @@ export function useFlowSim(): FlowSnapshot {
     return cacheResult;
   }, [nodes, edges]);
 }
-

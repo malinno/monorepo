@@ -1,6 +1,6 @@
 import React from "react";
 import { Handle, Position } from "@xyflow/react";
-import { useFlowSim } from "@/store/useFlowSim";
+import { useFlowSim } from "../../store/useFlowSim";
 
 export default function PipeStraightNode(props: any) {
   const { data, id } = props;
@@ -36,9 +36,9 @@ export default function PipeStraightNode(props: any) {
           stroke="#334155"
           strokeWidth="2"
         />
-        {/* l?p ?ng xám */}
+        {/* l?p ?ng xï¿½m */}
         <rect x="3" y="3" width={w - 6} height={h - 6} rx="10" fill="#cbd5e1" />
-        {/* l?p sáng */}
+        {/* l?p sï¿½ng */}
         <rect
           x="6"
           y="6"
@@ -47,7 +47,7 @@ export default function PipeStraightNode(props: any) {
           rx="8"
           fill="#e2e8f0"
         />
-        {/* dòng ch?y n?u active */}
+        {/* dï¿½ng ch?y n?u active */}
         {ori === "H" ? (
           <line
             x1={10}
@@ -75,7 +75,7 @@ export default function PipeStraightNode(props: any) {
         )}
       </svg>
 
-      {/* handles sát thành ?ng */}
+      {/* handles sï¿½t thï¿½nh ?ng */}
       {ori === "H" ? (
         <>
           <Handle

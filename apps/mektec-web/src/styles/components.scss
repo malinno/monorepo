@@ -1,0 +1,498 @@
+// ===========================================
+// MEKTEC WEB - COMPONENT STYLES
+// ===========================================
+
+@use "sass:color";
+@import "./config.scss";
+
+// ===========================================
+// BUTTONS
+// ===========================================
+
+.btn {
+  @include button-base;
+  padding: $spacing-3 $spacing-6;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  border-radius: $border-radius-base;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-2;
+  transition: all $transition-fast;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  @extend .btn;
+  @include button-primary;
+}
+
+.btn-secondary {
+  @extend .btn;
+  @include button-secondary;
+}
+
+.btn-outline {
+  @extend .btn;
+  background-color: transparent;
+  color: $accent-primary;
+  border: 1px solid $accent-primary;
+
+  &:hover:not(:disabled) {
+    background-color: $accent-primary;
+    color: $white;
+  }
+}
+
+.btn-ghost {
+  @extend .btn;
+  background-color: transparent;
+  color: $text-primary;
+  border: none;
+
+  &:hover:not(:disabled) {
+    background-color: $bg-hover;
+  }
+}
+
+.btn-danger {
+  @extend .btn;
+  background-color: $accent-error;
+  color: $white;
+
+  &:hover:not(:disabled) {
+    background-color: color.scale($accent-error, $lightness: -10%);
+  }
+}
+
+// Button sizes
+.btn-sm {
+  padding: $spacing-2 $spacing-4;
+  font-size: $font-size-sm;
+}
+
+.btn-lg {
+  padding: $spacing-4 $spacing-8;
+  font-size: $font-size-lg;
+}
+
+.btn-xl {
+  padding: $spacing-5 $spacing-10;
+  font-size: $font-size-xl;
+}
+
+// ===========================================
+// FORMS
+// ===========================================
+
+.form-group {
+  margin-bottom: $spacing-4;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: $spacing-2;
+  font-weight: $font-weight-medium;
+  color: $text-primary;
+  font-size: $font-size-sm;
+}
+
+.form-control {
+  @include input-base;
+}
+
+.form-control-sm {
+  @extend .form-control;
+  padding: $spacing-2 $spacing-3;
+  font-size: $font-size-sm;
+}
+
+.form-control-lg {
+  @extend .form-control;
+  padding: $spacing-4 $spacing-5;
+  font-size: $font-size-lg;
+}
+
+.form-text {
+  margin-top: $spacing-1;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+}
+
+.form-error {
+  margin-top: $spacing-1;
+  font-size: $font-size-sm;
+  color: $accent-error;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  margin-bottom: $spacing-3;
+}
+
+.form-check-input {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+}
+
+.form-check-label {
+  font-size: $font-size-sm;
+  color: $text-primary;
+  cursor: pointer;
+}
+
+// ===========================================
+// CARDS
+// ===========================================
+
+.card {
+  @include card-base;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: $spacing-6;
+  border-bottom: 1px solid $border-secondary;
+  background-color: $bg-tertiary;
+}
+
+.card-title {
+  margin: 0;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+}
+
+.card-subtitle {
+  margin: $spacing-1 0 0 0;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+}
+
+.card-body {
+  padding: $spacing-6;
+}
+
+.card-footer {
+  padding: $spacing-6;
+  border-top: 1px solid $border-secondary;
+  background-color: $bg-tertiary;
+}
+
+// ===========================================
+// ALERTS
+// ===========================================
+
+.alert {
+  padding: $spacing-4;
+  border-radius: $border-radius-base;
+  border: 1px solid transparent;
+  margin-bottom: $spacing-4;
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-3;
+}
+
+.alert-primary {
+  background-color: rgba(33, 150, 243, 0.1);
+  border-color: rgba(33, 150, 243, 0.2);
+  color: $accent-primary;
+}
+
+.alert-success {
+  background-color: rgba(76, 175, 80, 0.1);
+  border-color: rgba(76, 175, 80, 0.2);
+  color: $accent-secondary;
+}
+
+.alert-warning {
+  background-color: rgba(255, 152, 0, 0.1);
+  border-color: rgba(255, 152, 0, 0.2);
+  color: $accent-warning;
+}
+
+.alert-error {
+  background-color: rgba(244, 67, 54, 0.1);
+  border-color: rgba(244, 67, 54, 0.2);
+  color: $accent-error;
+}
+
+.alert-info {
+  background-color: rgba(0, 188, 212, 0.1);
+  border-color: rgba(0, 188, 212, 0.2);
+  color: $accent-info;
+}
+
+// ===========================================
+// BADGES
+// ===========================================
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-1 $spacing-2;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  line-height: 1;
+  border-radius: $border-radius-full;
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing-wide;
+}
+
+.badge-primary {
+  background-color: $accent-primary;
+  color: $white;
+}
+
+.badge-secondary {
+  background-color: $bg-tertiary;
+  color: $text-primary;
+}
+
+.badge-success {
+  background-color: $accent-secondary;
+  color: $white;
+}
+
+.badge-warning {
+  background-color: $accent-warning;
+  color: $white;
+}
+
+.badge-error {
+  background-color: $accent-error;
+  color: $white;
+}
+
+.badge-info {
+  background-color: $accent-info;
+  color: $white;
+}
+
+// ===========================================
+// NAVIGATION
+// ===========================================
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  margin-right: $spacing-4;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.nav-link {
+  display: block;
+  padding: $spacing-2 $spacing-3;
+  color: $text-secondary;
+  text-decoration: none;
+  border-radius: $border-radius-base;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: $text-primary;
+    background-color: $bg-hover;
+  }
+
+  &.active {
+    color: $accent-primary;
+    background-color: rgba(33, 150, 243, 0.1);
+  }
+}
+
+// ===========================================
+// MODALS
+// ===========================================
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: $z-index-modal-backdrop;
+  @include flex-center;
+}
+
+.modal {
+  background-color: $bg-primary;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-2xl;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
+  z-index: $z-index-modal;
+}
+
+.modal-header {
+  padding: $spacing-6;
+  border-bottom: 1px solid $border-secondary;
+  @include flex-between;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+}
+
+.modal-body {
+  padding: $spacing-6;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  padding: $spacing-6;
+  border-top: 1px solid $border-secondary;
+  @include flex-between;
+}
+
+// ===========================================
+// LOADING SPINNER
+// ===========================================
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid $border-secondary;
+  border-radius: 50%;
+  border-top-color: $accent-primary;
+  animation: spin 1s ease-in-out infinite;
+}
+
+.spinner-sm {
+  width: 16px;
+  height: 16px;
+  border-width: 1px;
+}
+
+.spinner-lg {
+  width: 32px;
+  height: 32px;
+  border-width: 3px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ===========================================
+// TOOLTIPS
+// ===========================================
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-content {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: $spacing-2;
+  padding: $spacing-2 $spacing-3;
+  background-color: $gray-900;
+  color: $white;
+  font-size: $font-size-sm;
+  border-radius: $border-radius-base;
+  white-space: nowrap;
+  z-index: $z-index-tooltip;
+  opacity: 0;
+  visibility: hidden;
+  transition: all $transition-fast;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: $gray-900;
+  }
+}
+
+.tooltip:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+// ===========================================
+// DROPDOWN
+// ===========================================
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background-color: $bg-primary;
+  border: 1px solid $border-primary;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-lg;
+  z-index: $z-index-dropdown;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all $transition-fast;
+}
+
+.dropdown.open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: block;
+  padding: $spacing-3 $spacing-4;
+  color: $text-primary;
+  text-decoration: none;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: $bg-hover;
+  }
+
+  &:first-child {
+    border-radius: $border-radius-base $border-radius-base 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 $border-radius-base $border-radius-base;
+  }
+}

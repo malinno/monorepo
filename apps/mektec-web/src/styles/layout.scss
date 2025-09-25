@@ -1,0 +1,552 @@
+// ===========================================
+// MEKTEC WEB - LAYOUT CONFIGURATION
+// ===========================================
+
+@import "./config.scss";
+
+// ===========================================
+// GLOBAL LAYOUT
+// ===========================================
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  line-height: $line-height-normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  color: $text-primary;
+  background-color: $bg-primary;
+  min-height: 100vh;
+}
+
+// ===========================================
+// CONTAINER SYSTEM
+// ===========================================
+
+.container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $container-padding;
+
+  @include mobile {
+    padding: 0 $spacing-3;
+  }
+}
+
+.container-fluid {
+  width: 100%;
+  padding: 0 $container-padding;
+
+  @include mobile {
+    padding: 0 $spacing-3;
+  }
+}
+
+// ===========================================
+// GRID SYSTEM
+// ===========================================
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 (-$grid-gutter / 2);
+}
+
+.col {
+  flex: 1;
+  padding: 0 ($grid-gutter / 2);
+}
+
+// Generate column classes
+@for $i from 1 through $grid-columns {
+  .col-#{$i} {
+    flex: 0 0 percentage($i / $grid-columns);
+    max-width: percentage($i / $grid-columns);
+    padding: 0 ($grid-gutter / 2);
+  }
+}
+
+// Responsive columns
+@include mobile {
+  .col {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  @for $i from 1 through $grid-columns {
+    .col-sm-#{$i} {
+      flex: 0 0 percentage($i / $grid-columns);
+      max-width: percentage($i / $grid-columns);
+    }
+  }
+}
+
+@include tablet {
+  @for $i from 1 through $grid-columns {
+    .col-md-#{$i} {
+      flex: 0 0 percentage($i / $grid-columns);
+      max-width: percentage($i / $grid-columns);
+    }
+  }
+}
+
+@include desktop {
+  @for $i from 1 through $grid-columns {
+    .col-lg-#{$i} {
+      flex: 0 0 percentage($i / $grid-columns);
+      max-width: percentage($i / $grid-columns);
+    }
+  }
+}
+
+// ===========================================
+// FLEXBOX UTILITIES
+// ===========================================
+
+.d-flex {
+  display: flex !important;
+}
+.d-inline-flex {
+  display: inline-flex !important;
+}
+.d-block {
+  display: block !important;
+}
+.d-inline-block {
+  display: inline-block !important;
+}
+.d-none {
+  display: none !important;
+}
+
+.flex-row {
+  flex-direction: row !important;
+}
+.flex-column {
+  flex-direction: column !important;
+}
+.flex-row-reverse {
+  flex-direction: row-reverse !important;
+}
+.flex-column-reverse {
+  flex-direction: column-reverse !important;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+.flex-nowrap {
+  flex-wrap: nowrap !important;
+}
+
+.justify-start {
+  justify-content: flex-start !important;
+}
+.justify-end {
+  justify-content: flex-end !important;
+}
+.justify-center {
+  justify-content: center !important;
+}
+.justify-between {
+  justify-content: space-between !important;
+}
+.justify-around {
+  justify-content: space-around !important;
+}
+
+.align-start {
+  align-items: flex-start !important;
+}
+.align-end {
+  align-items: flex-end !important;
+}
+.align-center {
+  align-items: center !important;
+}
+.align-baseline {
+  align-items: baseline !important;
+}
+.align-stretch {
+  align-items: stretch !important;
+}
+
+// ===========================================
+// SPACING UTILITIES
+// ===========================================
+
+// Margin utilities
+@each $size,
+  $value
+    in (
+      0: $spacing-0,
+      1: $spacing-1,
+      2: $spacing-2,
+      3: $spacing-3,
+      4: $spacing-4,
+      5: $spacing-5,
+      6: $spacing-6,
+      8: $spacing-8,
+      10: $spacing-10,
+      12: $spacing-12,
+      16: $spacing-16,
+      20: $spacing-20,
+      24: $spacing-24,
+      32: $spacing-32
+    )
+{
+  .m-#{$size} {
+    margin: $value !important;
+  }
+  .mt-#{$size} {
+    margin-top: $value !important;
+  }
+  .mr-#{$size} {
+    margin-right: $value !important;
+  }
+  .mb-#{$size} {
+    margin-bottom: $value !important;
+  }
+  .ml-#{$size} {
+    margin-left: $value !important;
+  }
+  .mx-#{$size} {
+    margin-left: $value !important;
+    margin-right: $value !important;
+  }
+  .my-#{$size} {
+    margin-top: $value !important;
+    margin-bottom: $value !important;
+  }
+}
+
+// Padding utilities
+@each $size,
+  $value
+    in (
+      0: $spacing-0,
+      1: $spacing-1,
+      2: $spacing-2,
+      3: $spacing-3,
+      4: $spacing-4,
+      5: $spacing-5,
+      6: $spacing-6,
+      8: $spacing-8,
+      10: $spacing-10,
+      12: $spacing-12,
+      16: $spacing-16,
+      20: $spacing-20,
+      24: $spacing-24,
+      32: $spacing-32
+    )
+{
+  .p-#{$size} {
+    padding: $value !important;
+  }
+  .pt-#{$size} {
+    padding-top: $value !important;
+  }
+  .pr-#{$size} {
+    padding-right: $value !important;
+  }
+  .pb-#{$size} {
+    padding-bottom: $value !important;
+  }
+  .pl-#{$size} {
+    padding-left: $value !important;
+  }
+  .px-#{$size} {
+    padding-left: $value !important;
+    padding-right: $value !important;
+  }
+  .py-#{$size} {
+    padding-top: $value !important;
+    padding-bottom: $value !important;
+  }
+}
+
+// ===========================================
+// TYPOGRAPHY UTILITIES
+// ===========================================
+
+.text-xs {
+  font-size: $font-size-xs !important;
+}
+.text-sm {
+  font-size: $font-size-sm !important;
+}
+.text-base {
+  font-size: $font-size-base !important;
+}
+.text-lg {
+  font-size: $font-size-lg !important;
+}
+.text-xl {
+  font-size: $font-size-xl !important;
+}
+.text-2xl {
+  font-size: $font-size-2xl !important;
+}
+.text-3xl {
+  font-size: $font-size-3xl !important;
+}
+.text-4xl {
+  font-size: $font-size-4xl !important;
+}
+.text-5xl {
+  font-size: $font-size-5xl !important;
+}
+.text-6xl {
+  font-size: $font-size-6xl !important;
+}
+
+.font-thin {
+  font-weight: $font-weight-thin !important;
+}
+.font-light {
+  font-weight: $font-weight-light !important;
+}
+.font-normal {
+  font-weight: $font-weight-normal !important;
+}
+.font-medium {
+  font-weight: $font-weight-medium !important;
+}
+.font-semibold {
+  font-weight: $font-weight-semibold !important;
+}
+.font-bold {
+  font-weight: $font-weight-bold !important;
+}
+.font-extrabold {
+  font-weight: $font-weight-extrabold !important;
+}
+.font-black {
+  font-weight: $font-weight-black !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+.text-center {
+  text-align: center !important;
+}
+.text-right {
+  text-align: right !important;
+}
+.text-justify {
+  text-align: justify !important;
+}
+
+.text-primary {
+  color: $text-primary !important;
+}
+.text-secondary {
+  color: $text-secondary !important;
+}
+.text-tertiary {
+  color: $text-tertiary !important;
+}
+.text-disabled {
+  color: $text-disabled !important;
+}
+.text-inverse {
+  color: $text-inverse !important;
+}
+
+.text-truncate {
+  @include text-truncate;
+}
+
+// ===========================================
+// LAYOUT COMPONENTS
+// ===========================================
+
+// Header
+.header {
+  background-color: $bg-primary;
+  border-bottom: 1px solid $border-primary;
+  padding: $spacing-4 0;
+  position: sticky;
+  top: 0;
+  z-index: $z-index-sticky;
+}
+
+// Sidebar
+.sidebar {
+  background-color: $bg-secondary;
+  border-right: 1px solid $border-primary;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 280px;
+  z-index: $z-index-fixed;
+  transition: transform $transition-base;
+
+  @include mobile {
+    transform: translateX(-100%);
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}
+
+// Main content
+.main-content {
+  margin-left: 280px;
+  min-height: 100vh;
+  padding: $spacing-6;
+
+  @include mobile {
+    margin-left: 0;
+    padding: $spacing-4;
+  }
+}
+
+// Card
+.card {
+  @include card-base;
+  padding: $spacing-6;
+  margin-bottom: $spacing-4;
+}
+
+.card-header {
+  border-bottom: 1px solid $border-secondary;
+  padding-bottom: $spacing-4;
+  margin-bottom: $spacing-4;
+}
+
+.card-body {
+  padding: $spacing-4 0;
+}
+
+.card-footer {
+  border-top: 1px solid $border-secondary;
+  padding-top: $spacing-4;
+  margin-top: $spacing-4;
+}
+
+// ===========================================
+// RESPONSIVE UTILITIES
+// ===========================================
+
+@include mobile {
+  .d-mobile-none {
+    display: none !important;
+  }
+  .d-mobile-block {
+    display: block !important;
+  }
+  .d-mobile-flex {
+    display: flex !important;
+  }
+}
+
+@include tablet {
+  .d-tablet-none {
+    display: none !important;
+  }
+  .d-tablet-block {
+    display: block !important;
+  }
+  .d-tablet-flex {
+    display: flex !important;
+  }
+}
+
+@include desktop {
+  .d-desktop-none {
+    display: none !important;
+  }
+  .d-desktop-block {
+    display: block !important;
+  }
+  .d-desktop-flex {
+    display: flex !important;
+  }
+}
+
+// ===========================================
+// UTILITY CLASSES
+// ===========================================
+
+.w-100 {
+  width: 100% !important;
+}
+.h-100 {
+  height: 100% !important;
+}
+.vh-100 {
+  height: 100vh !important;
+}
+.vw-100 {
+  width: 100vw !important;
+}
+
+.position-relative {
+  position: relative !important;
+}
+.position-absolute {
+  position: absolute !important;
+}
+.position-fixed {
+  position: fixed !important;
+}
+.position-sticky {
+  position: sticky !important;
+}
+
+.overflow-hidden {
+  overflow: hidden !important;
+}
+.overflow-auto {
+  overflow: auto !important;
+}
+.overflow-scroll {
+  overflow: scroll !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+
+.user-select-none {
+  user-select: none !important;
+}
+.user-select-all {
+  user-select: all !important;
+}
+
+.opacity-0 {
+  opacity: 0 !important;
+}
+.opacity-25 {
+  opacity: 0.25 !important;
+}
+.opacity-50 {
+  opacity: 0.5 !important;
+}
+.opacity-75 {
+  opacity: 0.75 !important;
+}
+.opacity-100 {
+  opacity: 1 !important;
+}

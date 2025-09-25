@@ -1,11 +1,7 @@
 import * as React from "react";
-import {
-  type EdgeProps,
-  getSmoothStepPath,
-  useStore,
-} from "@xyflow/react";
-import { useFlowSim, getNodeFlowFactor } from "@/store/useFlowSim";
-import "@/styles/pipe.css";
+import { type EdgeProps, getSmoothStepPath, useStore } from "@xyflow/react";
+import { useFlowSim, getNodeFlowFactor } from "../../store/useFlowSim";
+import "../../styles/pipe.css";
 
 /** Quy d?nh data c?a node:
  * - Hand valve:   n.type === "valve"        && n.data.isOpen: boolean
@@ -60,8 +56,8 @@ export default function PipeEdge(props: EdgeProps) {
   // Khi blocked, d?ng animation ho�n to�n d? th? hi?n kh�ng c�n d�ng ch?y
   const dashStyle: React.CSSProperties = flowing
     ? {
-      animation: `pipe-dash-move ${1.1 / Math.max(speed, 0.1)}s linear infinite`,
-    }
+        animation: `pipe-dash-move ${1.1 / Math.max(speed, 0.1)}s linear infinite`,
+      }
     : { animation: "none", strokeDashoffset: 0 };
 
   return (

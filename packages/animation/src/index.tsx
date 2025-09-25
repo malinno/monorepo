@@ -31,6 +31,13 @@ export { default as ZoneNode } from "./components/node/ZoneNode";
 // ---- Palette ----
 export { default as Palette } from "./components/palette/Palette";
 
+// ---- Canvas ----
+export { default as FlowCanvas } from "./components/FlowCanvas";
+
+// ---- Keyboard Controls ----
+export { default as KeyboardShortcuts } from "./components/KeyboardShortcuts";
+export { useKeyboardControls } from "./hooks/useKeyboardControls";
+
 // ---- Hooks/store ----
 export { useFlowSim } from "./store/useFlowSim";
 

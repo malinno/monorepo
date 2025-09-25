@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { Handle, Position } from "@xyflow/react";
-import { useFlowSim } from "@/store/useFlowSim";
+import { useFlowSim } from "../../store/useFlowSim";
 
 type Orientation = "N" | "S" | "E" | "W";
 
@@ -26,30 +26,62 @@ const getHandleConfig = (orientation: Orientation) => {
       return {
         inPos: Position.Right,
         outPos: Position.Left,
-        inStyle: handleStyle("#1E90FF", { right: -1, top: "44%", transform: "translate(50%, -50%)" }),
-        outStyle: handleStyle("#0EAD69", { left: -1, top: "44%", transform: "translate(-50%, -50%)" }),
+        inStyle: handleStyle("#1E90FF", {
+          right: -1,
+          top: "44%",
+          transform: "translate(50%, -50%)",
+        }),
+        outStyle: handleStyle("#0EAD69", {
+          left: -1,
+          top: "44%",
+          transform: "translate(-50%, -50%)",
+        }),
       };
     case "N":
       return {
         inPos: Position.Bottom,
         outPos: Position.Top,
-        inStyle: handleStyle("#1E90FF", { bottom: 1, left: "50%", transform: "translate(-50%, 50%)" }),
-        outStyle: handleStyle("#0EAD69", { top: -12, left: "50%", transform: "translate(-50%, -50%)" }),
+        inStyle: handleStyle("#1E90FF", {
+          bottom: 1,
+          left: "50%",
+          transform: "translate(-50%, 50%)",
+        }),
+        outStyle: handleStyle("#0EAD69", {
+          top: -12,
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }),
       };
     case "S":
       return {
         inPos: Position.Top,
         outPos: Position.Bottom,
-        inStyle: handleStyle("#1E90FF", { top: -10, left: "50%", transform: "translate(-50%, -50%)" }),
-        outStyle: handleStyle("#0EAD69", { bottom: 2, left: "50%", transform: "translate(-50%, 50%)" }),
+        inStyle: handleStyle("#1E90FF", {
+          top: -10,
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }),
+        outStyle: handleStyle("#0EAD69", {
+          bottom: 2,
+          left: "50%",
+          transform: "translate(-50%, 50%)",
+        }),
       };
     case "E":
     default:
       return {
         inPos: Position.Left,
         outPos: Position.Right,
-        inStyle: handleStyle("#1E90FF", { left: 1, top: "45%", transform: "translate(-50%, -50%)" }),
-        outStyle: handleStyle("#0EAD69", { right: 1, top: "45%", transform: "translate(50%, -50%)" }),
+        inStyle: handleStyle("#1E90FF", {
+          left: 1,
+          top: "45%",
+          transform: "translate(-50%, -50%)",
+        }),
+        outStyle: handleStyle("#0EAD69", {
+          right: 1,
+          top: "45%",
+          transform: "translate(50%, -50%)",
+        }),
       };
   }
 };
@@ -144,7 +176,12 @@ export default function ValveNode(props: any) {
 
         {/* handwheel */}
         <g transform="translate(60 14)">
-          <circle r="12" fill="url(#valve-wheel)" stroke="#1e293b" strokeWidth="2" />
+          <circle
+            r="12"
+            fill="url(#valve-wheel)"
+            stroke="#1e293b"
+            strokeWidth="2"
+          />
           <circle r="5" fill="#1f2937" />
           <g stroke="#1e2937" strokeWidth="1.6">
             <line x1="0" y1="-10" x2="0" y2="10" />
