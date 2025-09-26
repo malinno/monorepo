@@ -24,11 +24,16 @@ import {
   AccountCircle,
   ChevronLeft,
   ChevronRight,
-  Settings,
   ExpandMore,
   ExpandLess,
+  LightMode,
+  DarkMode,
+  AutoMode,
+  AdminPanelSettings,
+  Person,
 } from "@mui/icons-material";
 import { useAuth } from "../../contexts/AuthContext";
+import { useTheme as useCustomTheme } from "../../contexts/ThemeContext";
 import { useNavigation } from "../../hooks/useNavigation";
 import {
   ACCENT_FORM_PRIMARY,
@@ -47,8 +52,9 @@ interface AppLayoutProps {
 const AppLayout = ({ children }: AppLayoutProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const { goTo } = useNavigation();
+  const { mode, toggleTheme, actualMode } = useCustomTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [desktopOpen, setDesktopOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -87,6 +93,40 @@ const AppLayout = ({ children }: AppLayoutProps) => {
     });
   };
 
+  const getThemeIcon = () => {
+    switch (mode) {
+      case "light":
+        return <LightMode />;
+      case "dark":
+        return <DarkMode />;
+      case "auto":
+        return <AutoMode />;
+      default:
+        return <AutoMode />;
+    }
+  };
+
+  const getRoleIcon = () => {
+    if (user?.role === "admin") {
+      return <AdminPanelSettings />;
+    }
+    return <Person />;
+  };
+
+  const getRoleText = () => {
+    if (user?.role === "admin") {
+      return "Administrator";
+    }
+    return "User";
+  };
+
+  const getRoleColor = () => {
+    if (user?.role === "admin") {
+      return "error.main";
+    }
+    return "primary.main";
+  };
+
   // Get current path for active menu highlighting
   const currentPath = location.pathname;
 
@@ -99,7 +139,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           ? drawerWidth
           : collapsedDrawerWidth,
         height: "100vh",
-        backgroundColor: PRIMARY_FORM_BG,
+        backgroundColor: PRIMARY_FORM_BG, // Giữ nguyên màu cũ, không thay đổi theo theme
         display: "flex",
         flexDirection: "column",
         transition: "width 0.3s ease",
@@ -295,7 +335,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           ml: {
             md: desktopOpen ? `${drawerWidth}px` : 0,
           },
-          backgroundColor: "rgba(255, 255, 255, 0.95)",
+          backgroundColor: "background.paper", // Sử dụng theme color
           backdropFilter: "blur(10px)",
           boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
           borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
@@ -308,7 +348,11 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: "none" }, color: "text.primary" }}
+            sx={{
+              mr: 2,
+              display: { md: "none" },
+              color: actualMode === "dark" ? "#ffffff" : "#000000",
+            }}
           >
             <MenuIcon />
           </IconButton>
@@ -322,7 +366,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             sx={{
               mr: 2,
               display: { xs: "none", md: "block" },
-              color: "text.primary",
+              color: actualMode === "dark" ? "#ffffff" : "#000000",
             }}
           >
             {desktopOpen ? <ChevronLeft /> : <ChevronRight />}
@@ -334,13 +378,14 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             component="div"
             sx={{
               flexGrow: 1,
-              color: "text.primary",
+              color: actualMode === "dark" ? "#ffffff" : "#000000", // Màu chữ theo theme
               fontWeight: 600,
             }}
           >
             Phần mềm giám sát sản xuất SEEACT - SCADA
           </Typography>
 
+          {/* Profile Menu */}
           <IconButton
             size="large"
             edge="end"
@@ -349,7 +394,15 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             aria-haspopup="true"
             onClick={handleProfileMenuOpen}
             color="inherit"
-            sx={{ color: "text.primary" }}
+            sx={{
+              color: actualMode === "dark" ? "#ffffff" : "#000000",
+              "&:hover": {
+                backgroundColor:
+                  actualMode === "dark"
+                    ? "rgba(255, 255, 255, 0.1)"
+                    : "rgba(0, 0, 0, 0.04)",
+              },
+            }}
           >
             <AccountCircle />
           </IconButton>
@@ -374,29 +427,103 @@ const AppLayout = ({ children }: AppLayoutProps) => {
         PaperProps={{
           sx: {
             mt: 1,
-            minWidth: 200,
+            minWidth: 280,
+            backgroundColor: actualMode === "dark" ? "#2e364d" : "#ffffff",
             boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
           },
         }}
       >
-        <MenuItem onClick={handleProfileMenuClose}>
-          <ListItemIcon>
-            <AccountCircle fontSize="small" />
+        {/* User Info Header */}
+        <Box
+          sx={{
+            p: 2,
+            borderBottom:
+              actualMode === "dark"
+                ? "1px solid rgba(255, 255, 255, 0.2)"
+                : "1px solid #e0e0e0",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+            {getRoleIcon()}
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontWeight: 600,
+                color: actualMode === "dark" ? "#ffffff" : "#000000",
+              }}
+            >
+              {user?.name || "User"}
+            </Typography>
+            <Box
+              sx={{
+                px: 1,
+                py: 0.5,
+                borderRadius: 1,
+                backgroundColor:
+                  getRoleColor() === "error.main" ? "#ffebee" : "#e3f2fd",
+                border: `1px solid ${getRoleColor()}`,
+              }}
+            >
+              <Typography
+                variant="caption"
+                sx={{
+                  color: getRoleColor(),
+                  fontWeight: 600,
+                  fontSize: "0.7rem",
+                }}
+              >
+                {getRoleText()}
+              </Typography>
+            </Box>
+          </Box>
+          <Typography
+            variant="body2"
+            sx={{ color: actualMode === "dark" ? "#cccccc" : "#666666" }}
+          >
+            {user?.email || "user@mektec.com"}
+          </Typography>
+        </Box>
+
+        {/* Theme Toggle */}
+        <MenuItem
+          onClick={toggleTheme}
+          sx={{ color: actualMode === "dark" ? "#ffffff" : "#000000" }}
+        >
+          <ListItemIcon
+            sx={{ color: actualMode === "dark" ? "#ffffff" : "#000000" }}
+          >
+            {getThemeIcon()}
           </ListItemIcon>
-          <ListItemText>Profile</ListItemText>
+          <ListItemText
+            primary="Theme"
+            secondary={`${mode} (${actualMode})`}
+            primaryTypographyProps={{
+              color: actualMode === "dark" ? "#ffffff" : "#000000",
+            }}
+            secondaryTypographyProps={{
+              color: actualMode === "dark" ? "#cccccc" : "#666666",
+            }}
+          />
         </MenuItem>
-        <MenuItem onClick={handleProfileMenuClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Settings</ListItemText>
-        </MenuItem>
+
         <Divider />
-        <MenuItem onClick={handleLogout}>
-          <ListItemIcon>
+
+        {/* Logout */}
+        <MenuItem
+          onClick={handleLogout}
+          sx={{ color: actualMode === "dark" ? "#ffffff" : "#000000" }}
+        >
+          <ListItemIcon
+            sx={{ color: actualMode === "dark" ? "#ffffff" : "#000000" }}
+          >
             <Logout fontSize="small" />
           </ListItemIcon>
-          <ListItemText>Logout</ListItemText>
+          <ListItemText
+            primary="Logout"
+            primaryTypographyProps={{
+              color: actualMode === "dark" ? "#ffffff" : "#000000",
+            }}
+          />
         </MenuItem>
       </Menu>
 
@@ -473,12 +600,12 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           },
           height: "100vh",
           overflow: "auto",
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "background.default", // Sử dụng theme color
           transition: "width 0.3s ease",
         }}
       >
         <Toolbar />
-        <Box sx={{ p: 3, minHeight: "calc(100vh - 64px)" }}>
+        <Box sx={{ minHeight: "calc(100vh - 64px)" }}>
           {children || (React.createElement(Outlet) as any)}
         </Box>
       </Box>

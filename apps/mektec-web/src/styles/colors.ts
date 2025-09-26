@@ -6,6 +6,8 @@
 export const PRIMARY_FORM_BG = "#1f2a40";
 export const ACCENT_FORM_PRIMARY = "#3b499b";
 export const ACCENT_FORM_PRIMARY_HOVER = "#2E3A7B";
+export const ACCENT_FORM_SECONDARY = "#2e364d";
+export const ACCENT_FORM_TERTIARY_TABLE = "#3e4396";
 export const PRIMARY_COLOR = "rgba(46, 54, 77, 1)";
 export const PRIMARY_LIGHT = "rgba(60, 70, 95, 1)";
 export const PRIMARY_DARK = "rgba(35, 42, 60, 1)";
@@ -55,3 +57,33 @@ export const TEXT_INVERSE = PRIMARY_COLOR;
 export const BORDER_PRIMARY = "rgba(255, 255, 255, 0.2)";
 export const BORDER_SECONDARY = "rgba(255, 255, 255, 0.1)";
 export const BORDER_FOCUS = ACCENT_PRIMARY;
+//font size
+export const FONT_SIZE_XS = "0.75rem";
+export const FONT_SIZE_SM = "0.875rem";
+export const FONT_SIZE_BASE = "1rem";
+export const FONT_SIZE_LG = "1.125rem";
+export const FONT_SIZE_XL = "1.25rem";
+export const FONT_SIZE_2XL = "1.5rem";
+export const FONT_SIZE_3XL = "1.875rem";
+export const FONT_SIZE_4XL = "2.25rem";
+export const FONT_SIZE_5XL = "3rem";
+export const FONT_SIZE_6XL = "3.75rem";
+//font weight
+export const FONT_WEIGHT_THIN = "100";
+export const FONT_WEIGHT_LIGHT = "300";
+export const FONT_WEIGHT_NORMAL = "400";
+export const FONT_WEIGHT_MEDIUM = "500";
+export const FONT_WEIGHT_SEMIBOLD = "600";
+export const FONT_WEIGHT_BOLD = "700";
+export const FONT_WEIGHT_EXTRABOLD = "800";
+export const FONT_WEIGHT_BLACK = "900";
+//line height
+export const LINE_HEIGHT_NONE = "1";
+export const LINE_HEIGHT_TIGHT = "1.25";
+export const LINE_HEIGHT_SNUG = "1.375";
+export const LINE_HEIGHT_NORMAL = "1.5";
+export const LINE_HEIGHT_RELAXED = "1.625";
+export const LINE_HEIGHT_LOOSE = "2";
+//letter spacing
+export const LETTER_SPACING_TIGHT = "-0.025em";
+export const LETTER_SPACING_NORMAL = "0";

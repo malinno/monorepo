@@ -24,7 +24,7 @@ export const MOCK_RESPONSES = {
         name: "Test User",
         username: "testuser",
         email: "test@mektec.com",
-        role: "user",
+        role: "admin",
         avatar: null,
       },
       tokens: {
@@ -51,7 +51,7 @@ export const MOCK_RESPONSES = {
       name: "Test User",
       username: "testuser",
       email: "test@mektec.com",
-      role: "user",
+      role: "admin",
       avatar: null,
       createdAt: "2024-01-01T00:00:00Z",
       updatedAt: "2024-01-01T00:00:00Z",

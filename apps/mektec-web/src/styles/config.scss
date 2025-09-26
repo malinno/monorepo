@@ -1,14 +1,4 @@
-// ===========================================
-// MEKTEC WEB - SCSS CONFIGURATION
-// ===========================================
-
 @use "sass:color";
-
-// ===========================================
-// COLORS
-// ===========================================
-
-// Primary Colors
 $primary-color: rgba(46, 54, 77, 1); // Main background
 $primary-light: rgba(60, 70, 95, 1);
 $primary-dark: rgba(35, 42, 60, 1);
@@ -25,7 +15,9 @@ $accent-secondary: rgba(76, 175, 80, 1); // Green
 $accent-warning: rgba(255, 152, 0, 1); // Orange
 $accent-error: rgba(244, 67, 54, 1); // Red
 $accent-info: rgba(0, 188, 212, 1); // Cyan
-$accent-form-primary: #3b499b; // Form primary color (dark blue-purple)
+$accent-form-primary: #3b499b;
+$accent-form-secondary: #2e364d;
+$accent-form-tertiary-table: #3e4396;
 
 // Neutral Colors
 $white: rgba(255, 255, 255, 1);
