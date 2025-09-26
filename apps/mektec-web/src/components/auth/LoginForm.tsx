@@ -12,11 +12,8 @@ import {
   IconButton,
 } from "@mui/material";
 import { Visibility, VisibilityOff, Person, Lock } from "@mui/icons-material";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useAuth } from "../../contexts/AuthContext";
-import { type LoginCredentials } from "../../types/auth";
+import { useAuthContext } from "../../contexts/AuthContext";
+import { type LoginRequest } from "../../api/auth";
 import {
   PRIMARY_FORM_BG,
   ACCENT_FORM_PRIMARY,
@@ -25,44 +22,67 @@ import {
 } from "../../styles/colors";
 import { CustomButton, FlippingLoader } from "../common";
 
-const schema = yup.object({
-  username: yup.string().required("Tên đăng nhập là bắt buộc"),
-  password: yup
-    .string()
-    .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-    .required("Mật khẩu là bắt buộc"),
-  rememberMe: yup.boolean().optional(),
-});
-
 interface LoginFormProps {
   onSuccess?: () => void;
 }
 
 const LoginForm = ({ onSuccess }: LoginFormProps) => {
-  const { login, isLoading, error, clearError } = useAuth();
+  const { isLoading, error, login, clearError } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm<LoginCredentials>({
-    resolver: yupResolver(schema) as any,
-    mode: "onChange",
-    defaultValues: {
-      username: "",
-      password: "",
-      rememberMe: false,
-    },
+  const [formData, setFormData] = useState<LoginRequest>({
+    accountName: "",
+    password: "",
   });
+  const [formErrors, setFormErrors] = useState<Partial<LoginRequest>>({});
 
-  const onSubmit = async (data: LoginCredentials) => {
+  const handleInputChange =
+    (field: keyof LoginRequest) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value;
+      setFormData((prev) => ({ ...prev, [field]: value }));
+
+      // Clear error when user starts typing
+      if (formErrors[field]) {
+        setFormErrors((prev) => ({ ...prev, [field]: undefined }));
+      }
+      if (error) {
+        clearError();
+      }
+    };
+
+  const validateForm = (): boolean => {
+    const errors: Partial<LoginRequest> = {};
+
+    if (!formData.accountName.trim()) {
+      errors.accountName = "Tên đăng nhập là bắt buộc";
+    }
+
+    if (!formData.password.trim()) {
+      errors.password = "Mật khẩu là bắt buộc";
+    } else if (formData.password.length < 5) {
+      errors.password = "Mật khẩu phải có ít nhất 6 ký tự";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       clearError();
-      await login(data);
+      console.log("Starting login...");
+      await login(formData);
+      console.log("Login successful, calling onSuccess");
       onSuccess?.();
     } catch (error) {
-      // Error is handled by the auth context
+      console.error("Login error:", error);
+      // Error is handled by the auth store
     }
   };
 
@@ -115,13 +135,14 @@ const LoginForm = ({ onSuccess }: LoginFormProps) => {
             </Alert>
           )}
 
-          <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+          <Box component="form" onSubmit={handleSubmit}>
             <TextField
-              {...register("username")}
               fullWidth
               type="text"
-              error={!!errors.username}
-              helperText={errors.username?.message}
+              value={formData.accountName}
+              onChange={handleInputChange("accountName")}
+              error={!!formErrors.accountName}
+              helperText={formErrors.accountName}
               disabled={isLoading}
               InputProps={{
                 startAdornment: (
@@ -172,11 +193,12 @@ const LoginForm = ({ onSuccess }: LoginFormProps) => {
             />
 
             <TextField
-              {...register("password")}
               fullWidth
               type={showPassword ? "text" : "password"}
-              error={!!errors.password}
-              helperText={errors.password?.message}
+              value={formData.password}
+              onChange={handleInputChange("password")}
+              error={!!formErrors.password}
+              helperText={formErrors.password}
               disabled={isLoading}
               InputProps={{
                 startAdornment: (
@@ -241,7 +263,6 @@ const LoginForm = ({ onSuccess }: LoginFormProps) => {
             <FormControlLabel
               control={
                 <Checkbox
-                  {...register("rememberMe")}
                   disabled={isLoading}
                   sx={{
                     color: WHITE,
@@ -266,7 +287,7 @@ const LoginForm = ({ onSuccess }: LoginFormProps) => {
                 type="submit"
                 variant="primary"
                 size="large"
-                disabled={!isValid}
+                disabled={isLoading}
                 loading={isLoading}
                 loadingText="Đang đăng nhập..."
               >

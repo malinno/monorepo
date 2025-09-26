@@ -27,6 +27,15 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const location = useLocation();
   const navigate = useNavigate();
 
+  console.log(
+    "ProtectedRoute - isAuthenticated:",
+    isAuthenticated,
+    "isLoading:",
+    isLoading,
+    "user:",
+    user
+  );
+
   // Show loading spinner while checking authentication
   if (isLoading) {
     return (

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
 import {
   Box,
   Drawer,
@@ -32,15 +31,17 @@ import {
   AdminPanelSettings,
   Person,
 } from "@mui/icons-material";
-import { useAuth } from "../../contexts/AuthContext";
+
 import { useTheme as useCustomTheme } from "../../contexts/ThemeContext";
 import { useNavigation } from "../../hooks/useNavigation";
+import { Outlet } from "react-router-dom";
 import {
   ACCENT_FORM_PRIMARY,
   WHITE,
   PRIMARY_FORM_BG,
 } from "../../styles/colors";
 import { menuItems, isActiveMenu } from "../../config/menu";
+import { useAuth, useAuthActions } from "../../stores/authStore";
 
 const drawerWidth = 280;
 const collapsedDrawerWidth = 0; // Thu hẳn vào
@@ -49,10 +50,16 @@ interface AppLayoutProps {
   children?: React.ReactNode;
 }
 
+// Wrapper component for Outlet
+const OutletWrapper = () => {
+  return React.createElement(Outlet);
+};
+
 const AppLayout = ({ children }: AppLayoutProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const { logout, user } = useAuth();
+  const { user } = useAuth();
+  const { logout } = useAuthActions();
   const { goTo } = useNavigation();
   const { mode, toggleTheme, actualMode } = useCustomTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -606,7 +613,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       >
         <Toolbar />
         <Box sx={{ minHeight: "calc(100vh - 64px)" }}>
-          {children || (React.createElement(Outlet) as any)}
+          {children ? children : <OutletWrapper />}
         </Box>
       </Box>
     </Box>

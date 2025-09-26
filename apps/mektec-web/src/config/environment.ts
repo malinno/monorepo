@@ -59,7 +59,10 @@ export const config: EnvironmentConfig = {
   APP_VERSION: getEnvVar("VITE_APP_VERSION", "1.0.0"),
 
   // API Configuration
-  API_BASE_URL: getEnvVar("VITE_API_BASE_URL", "http://localhost:3000/api"),
+  API_BASE_URL: getEnvVar(
+    "VITE_API_BASE_URL",
+    "http://192.168.2.31:5000/api/v1"
+  ),
   API_TIMEOUT: getNumberEnvVar("VITE_API_TIMEOUT", 10000),
 
   // Authentication
@@ -89,26 +92,9 @@ export const isProduction = config.APP_ENV === "production";
 // API endpoints
 export const API_ENDPOINTS = {
   AUTH: {
-    LOGIN: "/auth/login",
-    LOGOUT: "/auth/logout",
-    REFRESH: "/auth/refresh",
-    PROFILE: "/auth/profile",
-    CHANGE_PASSWORD: "/auth/change-password",
-    FORGOT_PASSWORD: "/auth/forgot-password",
-    RESET_PASSWORD: "/auth/reset-password",
-  },
-  USERS: {
-    LIST: "/users",
-    CREATE: "/users",
-    UPDATE: "/users",
-    DELETE: "/users",
-  },
-  ANIMATIONS: {
-    LIST: "/animations",
-    CREATE: "/animations",
-    UPDATE: "/animations",
-    DELETE: "/animations",
-    EXPORT: "/animations/export",
+    LOGIN: "/Auth/login",
+    LOGOUT: "/Auth/logout",
+    REFRESH: "/Auth/refresh",
   },
 } as const;
 

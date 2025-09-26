@@ -1,88 +1,27 @@
 import React, {
   createContext,
   useContext,
-  useReducer,
   useEffect,
   type ReactNode,
   type FC,
   type ComponentType,
 } from "react";
-import { authService } from "../services/authService";
-import {
-  type AuthContextType,
-  type AuthState,
-  type LoginCredentials,
-  type User,
-} from "../types/auth";
+import { useAuth as useAuthStore, useAuthActions } from "../stores/authStore";
+import { type LoginRequest } from "../api/auth";
+import { storageService } from "../utils/storage";
 
-// Initial state
-const initialState: AuthState = {
-  user: null,
-  tokens: null,
-  isAuthenticated: false,
-  isLoading: true,
-  error: null,
-};
-
-// Action types
-type AuthAction =
-  | { type: "AUTH_START" }
-  | { type: "AUTH_SUCCESS"; payload: { user: User; tokens: any } }
-  | { type: "AUTH_FAILURE"; payload: string }
-  | { type: "AUTH_LOGOUT" }
-  | { type: "AUTH_CLEAR_ERROR" }
-  | { type: "AUTH_UPDATE_USER"; payload: User };
-
-// Reducer
-const authReducer = (state: AuthState, action: AuthAction): AuthState => {
-  switch (action.type) {
-    case "AUTH_START":
-      return {
-        ...state,
-        isLoading: true,
-        error: null,
-      };
-    case "AUTH_SUCCESS":
-      return {
-        ...state,
-        user: action.payload.user,
-        tokens: action.payload.tokens,
-        isAuthenticated: true,
-        isLoading: false,
-        error: null,
-      };
-    case "AUTH_FAILURE":
-      return {
-        ...state,
-        user: null,
-        tokens: null,
-        isAuthenticated: false,
-        isLoading: false,
-        error: action.payload,
-      };
-    case "AUTH_LOGOUT":
-      return {
-        ...state,
-        user: null,
-        tokens: null,
-        isAuthenticated: false,
-        isLoading: false,
-        error: null,
-      };
-    case "AUTH_CLEAR_ERROR":
-      return {
-        ...state,
-        error: null,
-      };
-    case "AUTH_UPDATE_USER":
-      return {
-        ...state,
-        user: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+// AuthContextType interface for backward compatibility
+export interface AuthContextType {
+  user: any;
+  tokens: any;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  error: string | null;
+  login: (credentials: LoginRequest) => Promise<void>;
+  logout: () => Promise<void>;
+  refreshAuth: () => Promise<void>;
+  clearError: () => void;
+}
 
 // Context
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -93,119 +32,47 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, initialState);
+  const { user, isAuthenticated, isLoading, error } = useAuthStore();
+  const { login, logout, refreshToken, getProfile, clearError } =
+    useAuthActions();
 
-  // Initialize auth state on mount
+  // Initialize auth state from localStorage on mount
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        dispatch({ type: "AUTH_START" });
-
-        // Check if user is already authenticated
-        if (authService.isAuthenticated()) {
-          const storedUser = authService.getStoredUser();
-          const storedTokens = authService.getStoredTokens();
-
-          if (storedUser && storedTokens) {
-            // Try to refresh the token to ensure it's still valid
-            try {
-              const refreshed = await authService.refreshAuth();
-              if (refreshed) {
-                dispatch({
-                  type: "AUTH_SUCCESS",
-                  payload: refreshed,
-                });
-              } else {
-                throw new Error("Token refresh failed");
-              }
-            } catch (error) {
-              // If refresh fails, try to get current user
-              const currentUser = await authService.getCurrentUser();
-              if (currentUser) {
-                dispatch({
-                  type: "AUTH_SUCCESS",
-                  payload: { user: currentUser, tokens: storedTokens },
-                });
-              } else {
-                throw new Error("Authentication failed");
-              }
-            }
-          } else {
-            throw new Error("No stored auth data");
-          }
-        } else {
-          dispatch({ type: "AUTH_LOGOUT" });
+        // Check if user is already authenticated from localStorage
+        if (isAuthenticated && user) {
+          console.log("User already authenticated from localStorage:", user);
+          return;
         }
-      } catch (error: any) {
+
+        // Check if tokens exist in localStorage
+        const { accessToken } = storageService.getTokens();
+        if (accessToken && !isAuthenticated) {
+          console.log("Found tokens in localStorage, getting profile...");
+          await getProfile();
+        }
+      } catch (error) {
         console.error("Auth initialization error:", error);
-        dispatch({
-          type: "AUTH_FAILURE",
-          payload: error.message || "Authentication failed",
-        });
+        // If there's an error, clear auth state
+        logout();
       }
     };
 
     initializeAuth();
-  }, []);
+  }, []); // Run only once on mount
 
-  // Login function
-  const login = async (credentials: LoginCredentials): Promise<void> => {
-    try {
-      dispatch({ type: "AUTH_START" });
-
-      const result = await authService.login(credentials);
-
-      dispatch({
-        type: "AUTH_SUCCESS",
-        payload: result,
-      });
-    } catch (error: any) {
-      dispatch({
-        type: "AUTH_FAILURE",
-        payload: error.message || "Login failed",
-      });
-      throw error;
-    }
-  };
-
-  // Logout function
-  const logout = async (): Promise<void> => {
-    try {
-      await authService.logout();
-    } catch (error) {
-      console.error("Logout error:", error);
-    } finally {
-      dispatch({ type: "AUTH_LOGOUT" });
-    }
-  };
-
-  // Refresh auth function
+  // Refresh auth function (alias for refreshToken)
   const refreshAuth = async (): Promise<void> => {
-    try {
-      const result = await authService.refreshAuth();
-      if (result) {
-        dispatch({
-          type: "AUTH_SUCCESS",
-          payload: result,
-        });
-      } else {
-        throw new Error("Token refresh failed");
-      }
-    } catch (error: any) {
-      dispatch({
-        type: "AUTH_FAILURE",
-        payload: error.message || "Token refresh failed",
-      });
-      throw error;
-    }
+    await refreshToken();
   };
 
-  // Clear error function
-  const clearError = (): void => {
-    dispatch({ type: "AUTH_CLEAR_ERROR" });
-  };
   const contextValue: AuthContextType = {
-    ...state,
+    user,
+    tokens: null, // Tokens are managed internally by the store
+    isAuthenticated,
+    isLoading,
+    error,
     login,
     logout,
     refreshAuth,
@@ -220,20 +87,23 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 };
 
 // Hook to use auth context
-export const useAuth = (): AuthContextType => {
+export const useAuthContext = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === null) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error("useAuthContext must be used within an AuthProvider");
   }
   return context;
 };
+
+// Alias for backward compatibility
+export const useAuth = useAuthContext;
 
 // HOC for components that need auth
 export const withAuth = <P extends object>(
   Component: ComponentType<P>
 ): FC<P> => {
   return (props: P) => {
-    const auth = useAuth();
+    const auth = useAuthContext();
     return React.createElement(Component, { ...props, auth });
   };
 };

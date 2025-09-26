@@ -219,7 +219,9 @@ class ApiService {
     url: string,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
+    console.log("API GET:", url, config);
     const response = await this.api.get<ApiResponse<T>>(url, config);
+    console.log("API GET Response:", response.data);
     return response.data;
   }
 
@@ -228,7 +230,9 @@ class ApiService {
     data?: any,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
+    console.log("API POST:", url, data, config);
     const response = await this.api.post<ApiResponse<T>>(url, data, config);
+    console.log("API POST Response:", response.data);
     return response.data;
   }
 

@@ -31,8 +31,9 @@ const LoadingScreen = () => (
 );
 
 // Admin Route - chỉ cho phép admin
-const AdminRoute = ({ children }: { children: React.ReactNode }) =>
-  React.createElement(ProtectedRoute, { requiredRole: "admin", children });
+const AdminRoute = ({ children }: { children: React.ReactNode }) => (
+  <ProtectedRoute requiredRole="admin">{children}</ProtectedRoute>
+);
 
 // Unauthorized page
 const UnauthorizedPage = () => (
@@ -53,14 +54,14 @@ const AppRouter = () => {
   const { isLoading } = useAuth();
 
   if (isLoading) {
-    return React.createElement(LoadingScreen);
+    return <LoadingScreen />;
   }
 
   return React.createElement(
-    Routes,
+    Routes as any,
     null,
     // Public Routes
-    React.createElement(Route, {
+    React.createElement(Route as any, {
       path: "/login",
       element: React.createElement(
         PublicRoute,
@@ -69,7 +70,7 @@ const AppRouter = () => {
       ),
     }),
     // Protected Routes with Layout
-    React.createElement(Route, {
+    React.createElement(Route as any, {
       path: "/",
       element: React.createElement(
         ProtectedRoute,
@@ -77,32 +78,32 @@ const AppRouter = () => {
         React.createElement(AppLayout)
       ),
       children: [
-        React.createElement(Route, {
+        React.createElement(Route as any, {
           path: "dashboard",
           element: React.createElement(Dashboard),
         }),
-        React.createElement(Route, {
+        React.createElement(Route as any, {
           path: "animation",
           element: React.createElement(AnimationPage),
         }),
-        React.createElement(Route, {
+        React.createElement(Route as any, {
           path: "settings",
           element: React.createElement(SettingsPage),
         }),
-        React.createElement(Route, {
+        React.createElement(Route as any, {
           path: "layout",
           element: React.createElement(LayoutPage),
         }),
         // Cảnh báo routes
-        React.createElement(Route, {
+        React.createElement(Route as any, {
           path: "canh-bao/dieu-kien",
           element: React.createElement(DieuKienCanhBao),
         }),
-        React.createElement(Route, {
+        React.createElement(Route as any, {
           path: "canh-bao/cai-dat",
           element: React.createElement(CaiDatCanhBaoChung),
         }),
-        React.createElement(Route, {
+        React.createElement(Route as any, {
           path: "",
           element: React.createElement(Navigate, {
             to: "dashboard",
@@ -112,7 +113,7 @@ const AppRouter = () => {
       ],
     }),
     // Admin Routes
-    React.createElement(Route, {
+    React.createElement(Route as any, {
       path: "/admin",
       element: React.createElement(
         AdminRoute,
@@ -125,16 +126,16 @@ const AppRouter = () => {
       ),
     }),
     // Error Pages
-    React.createElement(Route, {
+    React.createElement(Route as any, {
       path: "/unauthorized",
       element: React.createElement(UnauthorizedPage),
     }),
-    React.createElement(Route, {
+    React.createElement(Route as any, {
       path: "/404",
       element: React.createElement(NotFoundPage),
     }),
     // Default Redirects
-    React.createElement(Route, {
+    React.createElement(Route as any, {
       path: "*",
       element: React.createElement(NotFoundPage),
     })

@@ -73,11 +73,15 @@ const Dashboard = () => {
   };
 
   const borderRightStyle = {
-    borderRight: `1px solid ${BORDER_PRIMARY}`,
+    borderRight: `1px solid ${
+      actualMode === "dark" ? BORDER_PRIMARY : "#e0e0e0"
+    }`,
   };
 
   const borderRightThickStyle = {
-    borderRight: `2px solid rgba(255, 255, 255, 0.4)`,
+    borderRight: `2px solid ${
+      actualMode === "dark" ? "rgba(255, 255, 255, 0.4)" : "#d0d0d0"
+    }`,
   };
 
   const tabs = ["All", "Line", "Máy", "Đường ống"];
@@ -389,11 +393,42 @@ const Dashboard = () => {
             sx={{
               backgroundColor: "transparent",
               boxShadow: "none",
-              border: "none",
+              border: `1px solid ${
+                actualMode === "dark" ? BORDER_PRIMARY : "#e0e0e0"
+              }`,
+              borderRadius: 1,
+              maxHeight: "calc(100vh - 200px)", // Giới hạn chiều cao để có scroll
+              overflow: "auto",
             }}
           >
-            <Table stickyHeader>
-              <TableHead>
+            <Table
+              stickyHeader
+              sx={{
+                borderCollapse: "collapse",
+                "& .MuiTableHead-root": {
+                  position: "sticky",
+                  top: 0,
+                  zIndex: 10,
+                },
+                "& .MuiTableHead-root .MuiTableCell-root": {
+                  position: "sticky",
+                  top: 0,
+                  zIndex: 10,
+                },
+              }}
+            >
+              <TableHead
+                sx={{
+                  position: "sticky",
+                  top: 0,
+                  zIndex: 15,
+                  backgroundColor:
+                    actualMode === "dark" ? "#1f2a40" : "#f5f5f5",
+                  borderBottom: `2px solid ${
+                    actualMode === "dark" ? BORDER_PRIMARY : "#d0d0d0"
+                  }`,
+                }}
+              >
                 {/* Hàng 1 - Header chính */}
                 <TableRow>
                   <TableCell
@@ -555,14 +590,22 @@ const Dashboard = () => {
                   </TableRow>
                 )}
               </TableHead>
-              <TableBody>
+              <TableBody
+                sx={{
+                  borderBottom: `1px solid ${
+                    actualMode === "dark" ? BORDER_PRIMARY : "#d0d0d0"
+                  }`,
+                }}
+              >
                 {getDisplayedData().map((row, index) => (
                   <TableRow
                     key={row.id}
                     sx={{
                       backgroundColor:
                         actualMode === "dark" ? "#2e364d" : "#ffffff",
-                      borderBottom: `1px solid ${BORDER_SECONDARY}`,
+                      borderBottom: `1px solid ${
+                        actualMode === "dark" ? BORDER_SECONDARY : "#f0f0f0"
+                      }`,
                       "&:nth-of-type(even)": {
                         backgroundColor:
                           actualMode === "dark" ? "#1f2a40" : "#f8f9fa",
@@ -613,7 +656,10 @@ const Dashboard = () => {
                     >
                       <Typography
                         variant="body2"
-                        sx={{ fontFamily: "monospace" }}
+                        sx={{
+                          fontFamily: "monospace",
+                          color: actualMode === "dark" ? WHITE : BLACK,
+                        }}
                       >
                         {row.uuid}
                       </Typography>
@@ -920,7 +966,7 @@ const Dashboard = () => {
                         sx={{
                           color:
                             row.status === "active"
-                              ? "#4caf50"
+                              ? "#ffffff" // Chữ trắng cho trạng thái "Hoạt động"
                               : actualMode === "dark"
                               ? "#ffffff"
                               : "#000000",

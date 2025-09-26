@@ -9,22 +9,22 @@ export interface DomainConfig {
 // Environment-specific domain configurations
 export const DOMAINS: Record<string, DomainConfig> = {
   development: {
-    api: "http://localhost:3000/api",
+    api: "http://192.168.2.31:5000/api/v1",
     web: "http://localhost:5173",
-    cdn: "http://localhost:3000/static",
-    ws: "ws://localhost:3000",
+    cdn: "http://192.168.2.31:5000/static",
+    ws: "ws://192.168.2.31:5000",
   },
   staging: {
-    api: "http://localhost:3001/api", // Local staging server
+    api: "http://192.168.2.31:5000/api/v1",
     web: "http://localhost:5174",
-    cdn: "http://localhost:3001/static",
-    ws: "ws://localhost:3001",
+    cdn: "http://192.168.2.31:5000/static",
+    ws: "ws://192.168.2.31:5000",
   },
   production: {
-    api: "http://localhost:3002/api", // Local production server
+    api: "http://192.168.2.31:5000/api/v1",
     web: "http://localhost:5175",
-    cdn: "http://localhost:3002/static",
-    ws: "ws://localhost:3002",
+    cdn: "http://192.168.2.31:5000/static",
+    ws: "ws://192.168.2.31:5000",
   },
 };
 
@@ -60,19 +60,19 @@ export const getWsDomain = (): string => {
 // CORS configuration
 export const CORS_CONFIG = {
   development: {
-    allowedOrigins: ["http://localhost:5173", "http://localhost:3000"],
+    allowedOrigins: ["http://localhost:5173", "http://192.168.2.31:5000"],
     allowedMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
     credentials: true,
   },
   staging: {
-    allowedOrigins: ["http://localhost:5174", "http://localhost:3001"],
+    allowedOrigins: ["http://localhost:5174", "http://192.168.2.31:5000"],
     allowedMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
     credentials: true,
   },
   production: {
-    allowedOrigins: ["http://localhost:5175", "http://localhost:3002"],
+    allowedOrigins: ["http://localhost:5175", "http://192.168.2.31:5000"],
     allowedMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
     credentials: true,
